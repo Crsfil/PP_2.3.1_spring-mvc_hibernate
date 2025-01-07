@@ -14,7 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = "web") // Укажите ваш корневой пакет
+@ComponentScan(basePackages = "web") // РєРѕСЂРЅРµРІРѕР№ РїР°РєРµС‚
 public class DBConfig {
 
     @Bean
@@ -31,7 +31,7 @@ public class DBConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("web.model"); // пакет, где находятся Entity классы
+        entityManagerFactory.setPackagesToScan("web.model"); // РїР°РєРµС‚, РіРґРµ РЅР°С…РѕРґСЏС‚СЃСЏ Entity РєР»Р°СЃСЃС‹
 
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.show_sql", "true");
