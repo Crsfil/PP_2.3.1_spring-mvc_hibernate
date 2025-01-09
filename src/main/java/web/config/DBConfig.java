@@ -7,8 +7,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.hibernate.jpa.HibernatePersistenceProvider;
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -40,7 +38,7 @@ public class DBConfig {
         // Настройки Hibernate
         Properties jpaProperties = new Properties();
         jpaProperties.put("hibernate.show_sql", "true");
-        jpaProperties.put("hibernate.hbm2ddl.auto", "create-drop");
+        jpaProperties.put("hibernate.hbm2ddl.auto", "update");
         jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect");
         entityManagerFactory.setJpaProperties(jpaProperties);
 

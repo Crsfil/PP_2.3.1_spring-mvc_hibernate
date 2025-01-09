@@ -23,17 +23,12 @@ public class UserController {
         return "users";
     }
 
-    @GetMapping("/new")
-    public String newUserForm(Model model) {
-        model.addAttribute("user", new User());
-        return "users_form";
-    }
-
     @PostMapping("/new")
     public String createUser(@ModelAttribute("user") User user) {
         userService.saveUser(user);
         return "redirect:/users";
     }
+
 
     @PostMapping("/delete")
     public String deleteUser(@RequestParam("id") Long id) {
