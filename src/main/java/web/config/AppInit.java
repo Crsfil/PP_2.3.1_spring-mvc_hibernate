@@ -1,6 +1,11 @@
 package web.config;
 
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.FilterRegistration;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -23,7 +28,18 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     /* Данный метод указывает url, на котором будет базироваться приложение */
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[]{"/users"};
+    }
+
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+
+        FilterRegistration.Dynamic encodingFilter = servletContext.addFilter("encodingFilter", new CharacterEncodingFilter());
+        encodingFilter.setInitParameter("encoding", "UTF-8"); // Указываем кодировку
+        encodingFilter.setInitParameter("forceEncoding", "true"); // Принудительно применяем кодировку
+        encodingFilter.addMappingForUrlPatterns(null, true, "/*"); // Применяем фильтр ко всем URL
     }
 
 }

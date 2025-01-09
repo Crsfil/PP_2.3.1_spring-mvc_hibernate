@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management</title>
+  <style>
+    /* Простые стили для улучшения внешнего вида */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+<div>
+  <h1>User Management</h1>
+
+  <!-- Форма для добавления нового пользователя -->
+  <form th:action="@{/users/new}" method="post" th:object="${user}">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" th:field="*{name}" required>
+    </div>
+    <div>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" th:field="*{lastName}" required>
+    </div>
+    <button type="submit">Add User</button>
+  </form>
+
+  <!-- Таблица со списком пользователей -->
+  <h2>User List</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Last Name</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.id}"></td>
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.lastName}"></td>
+      <td>
+        <form th:action="@{/users/delete}" method="post">
+          <input type="hidden" name="id" th:value="${user.id}">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
