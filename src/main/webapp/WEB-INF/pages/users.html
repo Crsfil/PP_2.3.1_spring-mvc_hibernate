@@ -4,15 +4,14 @@
   <meta charset="UTF-8">
   <title>User Management</title>
   <style>
-    /* Простые стили для улучшения внешнего вида */
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 80px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      margin-top: 14px;
     }
     table, th, td {
       border: 1px solid #ddd;
@@ -25,7 +24,7 @@
       background-color: #f2f2f2;
     }
     form {
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
     label {
       display: block;
@@ -54,16 +53,30 @@
   <h1>User Management</h1>
 
   <!-- Форма для добавления нового пользователя -->
-  <form th:action="@{/users/new}" method="post" th:object="${user}">
+  <form th:action="@{/users/new}" method="post" th:object="${newUser}">
     <div>
-      <label for="name">Name</label>
-      <input type="text" id="name" th:field="*{name}" required>
+      <label for="newUserName">Name</label>
+      <input type="text" id="newUserName" th:field="*{name}" required> <!-- Уникальный id -->
     </div>
     <div>
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" th:field="*{lastName}" required>
+      <label for="newUserLastName">Last Name</label>
+      <input type="text" id="newUserLastName" th:field="*{lastName}" required> <!-- Уникальный id -->
     </div>
     <button type="submit">Add User</button>
+  </form>
+
+  <!-- Форма для обновления пользователя -->
+  <form th:action="@{/users/update}" method="post" th:object="${existingUser}">
+    <input type="hidden" th:field="*{id}" />
+    <div>
+      <label for="updateUserName">Name</label>
+      <input type="text" id="updateUserName" th:field="*{name}" required> <!-- Уникальный id -->
+    </div>
+    <div>
+      <label for="updateUserLastName">Last Name</label>
+      <input type="text" id="updateUserLastName" th:field="*{lastName}" required> <!-- Уникальный id -->
+    </div>
+    <button type="submit">Update User</button>
   </form>
 
   <!-- Таблица со списком пользователей -->
@@ -83,6 +96,10 @@
       <td th:text="${user.name}"></td>
       <td th:text="${user.lastName}"></td>
       <td>
+        <form th:action="@{/users/edit}" method="get">
+          <input type="hidden" name="id" th:value="${user.id}">
+          <button type="submit">Edit</button>
+        </form>
         <form th:action="@{/users/delete}" method="post">
           <input type="hidden" name="id" th:value="${user.id}">
           <button type="submit">Delete</button>
